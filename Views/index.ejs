@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dummy Generator</title>
+    <style>
+      button {
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="generate">Generate</button>
+    <button id="delete">Delete</button>
+    <p id="result"></p>
+    <script>
+      let generate = document.getElementById("generate");
+      let deleteButton = document.getElementById("delete");
+
+      async function callApi(endpoint) {
+        try {
+          const res = await fetch(`/${endpoint}`, {
+            method: "GET",
+          });
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          const text = await res.text();
+          document.getElementById("result").innerText = text;
+        } catch (err) {
+          console.error(`Error calling api: ${err}`);
+          document.getElementById("result").innerText = "❌ Failed to call API";
+        }
+      }
+
+      generate.addEventListener("click", () => callApi("generateMany"));
+
+      deleteButton.addEventListener("click", () => callApi("empDelete"));
+    </script>
+  </body>
+</html>
