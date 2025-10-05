@@ -1,3 +1,76 @@
+/**
+ * =============================================================
+ * 📘 EXPRESS + MONGOOSE EMPLOYEE MANAGEMENT SERVER
+ * =============================================================
+ *
+ * ✅ Server Setup
+ *    - Express server running on port 3000
+ *    - Uses async function `startServer()` to connect to MongoDB before starting routes
+ *    - app.listen() starts the server after successful DB connection
+ *
+ * ✅ Middleware
+ *    - `express.json()` → To parse incoming JSON requests
+ *    - (Optional) CORS setup commented out
+ *    - `app.set('view engine','ejs')` → Sets EJS as the template engine
+ *
+ * ✅ MongoDB Connection
+ *    - Connects to local MongoDB database `company`
+ *    - `await mongoose.connect("mongodb://127.0.0.1:27017/company")`
+ *    - Logs success or failure messages
+ *
+ * ✅ Employee Schema & Model
+ *    - Defined in `models/employee.js` (not shown here)
+ *    - Fields include: name, salary, language, city, isManager
+ *    - Represents `employees` collection in MongoDB
+ *
+ * ✅ Routes
+ *
+ *    1. GET "/" 
+ *       - Renders the `index.ejs` page
+ *
+ *    2. GET "/generate" 
+ *       - Creates a single Employee document
+ *       - Saves it to the DB using `employee.save()`
+ *       - Sends confirmation message
+ *
+ *    3. GET "/generateMany"
+ *       - Generates 10 employees using a base array
+ *       - Adds random salary using `getRandomSalary()` function
+ *       - Inserts all 10 documents using `Employee.insertMany()`
+ *       - Sends confirmation message
+ *
+ *    4. GET "/empDelete"
+ *       - Deletes all Employee documents using `Employee.deleteMany({})`
+ *       - Returns number of deleted documents or message if none exist
+ *
+ * ✅ Utility Function
+ *    - `getRandomSalary(min=400000, max=5000000)` → generates random salary
+ *
+ * ✅ Key Concepts Learned
+ *    - Combining Express + Mongoose to create a simple CRUD-like server
+ *    - Async/Await for database operations
+ *    - Creating a single document: `new Model()` + `.save()`
+ *    - Inserting multiple documents at once: `Model.insertMany()`
+ *    - Deleting documents: `Model.deleteMany()`
+ *    - Passing dynamic data to front-end using EJS templates
+ *    - Error handling using try/catch in async routes
+ *
+ * =============================================================
+ * 💡 Flow:
+ * Request → Route → DB Operation → Response to Client
+ *
+ * =============================================================
+ * 💡 Notes / Best Practices
+ *    - Use async/await for all DB operations to avoid race conditions
+ *    - Keep schemas in a separate models folder
+ *    - Use try/catch blocks for error handling
+ *    - Use a utility function for reusable logic (e.g., random salary)
+ *    - Keep routes organized and descriptive
+ *    - Can extend with POST, PUT, DELETE routes for full CRUD
+ *
+ * =============================================================
+ */
+
 import express from "express";
 import mongoose from "mongoose";
 import { Employee } from "./models/employee.js";
